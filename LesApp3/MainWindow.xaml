@@ -6,10 +6,14 @@
         xmlns:local="clr-namespace:LesApp3"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="LesApp3.MainWindow"
         mc:Ignorable="d"
-        Title="LesApp3" Height="150.248" Width="245.462">
-    <Grid>
-        <xctk:ColorPicker HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="210"/>
-        <Label x:Name="lb" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1" Width="210"/>
-        <xctk:ColorPicker HorizontalAlignment="Left" Margin="9,70,0,0" VerticalAlignment="Top" Width="211"/>
+        Title="LesApp3" Height="199.248" Width="239.462">
+    <Grid Margin="0,0,2,2">
+        <xctk:ColorPicker x:Name="cpGround" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lbText" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1" Width="210"/>
+        <xctk:ColorPicker x:Name="cpText" HorizontalAlignment="Left" Margin="120,43,0,0" VerticalAlignment="Top" Width="100"/>
+        <Slider x:Name="sSize" HorizontalAlignment="Left" Margin="75,76,0,0" VerticalAlignment="Top" Width="145" Value="12" Maximum="72" LargeChange="12" SmallChange="6" Minimum="6" TickFrequency="6" TickPlacement="TopLeft"/>
+        <TextBox x:Name="tbSize" HorizontalAlignment="Left" Height="23" Margin="10,76,0,0" TextWrapping="Wrap" Text="Size" VerticalAlignment="Top" Width="60" TextAlignment="Center" IsReadOnly="True"/>
+        <ComboBox x:Name="cbFont" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="210"/>
+        <Button x:Name="btSave" Content="Save" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Width="209"/>
     </Grid>
 </Window>
