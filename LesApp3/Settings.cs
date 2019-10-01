@@ -52,6 +52,25 @@ namespace LesApp3
             yield return FontStyle.GetValues();
             yield break;
         }
+
+        /// <summary>
+        /// Отримання всіх назв налаштувань
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable GetValueNames()
+        {
+            // колір тексту
+            yield return Foreground.GetValueNames("Foreground");
+            // колір фону
+            yield return Background.GetValueNames("Background");
+            // розмір тексту
+            yield return SizeFont.ToString();
+            // назва шрифта
+            yield return Font;
+            // стиль шрифта
+            yield return FontStyle.GetValueNames("FontStyle");
+            yield break;
+        }
     }
 
     /// <summary>
@@ -155,6 +174,19 @@ namespace LesApp3
             yield break;
         }
 
+        /// <summary>
+        /// Отримання назв набору кольорів: ARGB
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable GetValueNames(string property)
+        {
+            yield return property + ".A";
+            yield return property + ".R";
+            yield return property + ".G";
+            yield return property + ".B";
+            yield break;
+        }
+
     }
 
     /// <summary>
@@ -172,7 +204,7 @@ namespace LesApp3
         public FontWeight FontWeight { get; set; }
 
         /// <summary>
-        /// Отримання параиетрів стилю
+        /// Отримання параметрів стилю
         /// </summary>
         /// <returns></returns>
         public IEnumerable GetValues()
@@ -181,5 +213,18 @@ namespace LesApp3
             yield return FontWeight.ToString();
             yield break;
         }
+
+        /// <summary>
+        /// Отримання назв параметрів стилю
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable GetValueNames(string property)
+        {
+            yield return property + "FontStyle";
+            yield return property + "FontWeight";
+            yield break;
+        }
     }
+
+    //todo: Реалізувати через числові дані
 }
