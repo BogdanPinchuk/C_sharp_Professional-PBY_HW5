@@ -20,11 +20,17 @@ namespace LesApp3
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Налаштування програми
+        /// </summary>
+        private Settings settings = new Settings();
+
         public MainWindow()
         {
             InitializeComponent();
 
-            // стартовы налаштування
+            // при завантаженні форми
+
 
         }
 
@@ -112,5 +118,22 @@ namespace LesApp3
             }
 
         }
+
+        /// <summary>
+        /// Завантаження даних
+        /// </summary>
+        private void LoadSettings()
+        {
+
+        }
+
+        /// <summary>
+        /// Збереження даних
+        /// </summary>
+        private void SaveSettings()
+        {
+
+        }
+
     }
 }
