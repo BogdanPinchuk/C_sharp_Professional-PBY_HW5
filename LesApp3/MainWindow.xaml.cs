@@ -28,12 +28,6 @@ namespace LesApp3
 
         }
 
-        private void SetFonts()
-        {
-            //lbText.FontFamily
-            
-        }
-
         /// <summary>
         /// При виборі кольору фону
         /// </summary>
@@ -79,8 +73,44 @@ namespace LesApp3
         /// <param name="e"></param>
         private void CbStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // зчитування індекса вибраного елемента
+            int index = cbFont.SelectedIndex;
+            // знаходження назви елемента
+            string font = Fonts.SystemFontFamilies.ElementAt(index).Source;
             // установка шрифта
-            //lbText.FontStyle
+            lbText.FontFamily = new FontFamily(font);
+        }
+
+        /// <summary>
+        /// Установка стилю шотфта
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CbStyle_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            // зчитування індекса вибраного елемента
+            int index = cbStyle.SelectedIndex;
+            // згідно вибору встановлення стилю
+            switch (index)
+            {
+                case 1: // Italic
+                    lbText.FontStyle = FontStyles.Italic;
+                    lbText.FontWeight = FontWeights.Normal;
+                    break;
+                case 2: // Bold
+                    lbText.FontStyle = FontStyles.Normal;
+                    lbText.FontWeight = FontWeights.Bold;
+                    break;
+                case 3: // Bold-Italic
+                    lbText.FontStyle = FontStyles.Italic;
+                    lbText.FontWeight = FontWeights.Bold;
+                    break;
+                default:    // normal
+                    lbText.FontStyle = FontStyles.Normal;
+                    lbText.FontWeight = FontWeights.Normal;
+                    break;
+            }
+
         }
     }
 }

@@ -13,12 +13,17 @@
             <RowDefinition Height="134"/>
         </Grid.RowDefinitions>
         <xctk:ColorPicker x:Name="cpGround" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Width="100" ToolTip="Колір фону" SelectedColorChanged="СpGround_SelectedColorChanged" Grid.Row="1"/>
-        <Label x:Name="lbText" Content="LesApp3" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
+        <Label x:Name="lbText" Content=" LesApp3 " HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
         <xctk:ColorPicker x:Name="cpText" HorizontalAlignment="Left" Margin="120,9,0,0" VerticalAlignment="Top" Width="100" ToolTip="Колір тексту" SelectedColorChanged="CpText_SelectedColorChanged" Grid.Row="1"/>
         <Slider x:Name="sSize" HorizontalAlignment="Left" Margin="75,36,0,0" VerticalAlignment="Top" Width="145" Value="12" Maximum="72" LargeChange="12" SmallChange="6" Minimum="6" TickFrequency="6" TickPlacement="TopLeft" ToolTip="Розмір шрифта" ValueChanged="SSize_ValueChanged" Grid.Row="1"/>
         <TextBox x:Name="tbSize" HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" Text="Size" VerticalAlignment="Top" Width="60" TextAlignment="Center" IsReadOnly="True" ToolTip="Розмір шрифта" Grid.Row="1"/>
-        <ComboBox x:Name="cbStyle" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Width="100" ToolTip="Шрифт" Grid.Row="1" SelectionChanged="CbStyle_SelectionChanged" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}"/>
+        <ComboBox x:Name="cbFont" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Width="100" ToolTip="Шрифт" Grid.Row="1" SelectionChanged="CbStyle_SelectionChanged" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}"/>
         <Button x:Name="btSave" Content="Save" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="210" ToolTip="Зберегти налаштування" Grid.Row="1"/>
-        <ComboBox x:Name="cbWeight" HorizontalAlignment="Left" Margin="120,63,0,0" VerticalAlignment="Top" Width="100" ToolTip="Стиль шрифта" Grid.Row="1"/>
+        <ComboBox x:Name="cbStyle" HorizontalAlignment="Left" Margin="120,63,0,0" VerticalAlignment="Top" Width="100" ToolTip="Стиль шрифта" Grid.Row="1" SelectionChanged="CbStyle_SelectionChanged_1">
+            <TextBlock Text="Normal"/>
+            <TextBlock FontStyle="Italic" Text="Italic"/>
+            <TextBlock FontWeight="Bold" Text="Bold"/>
+            <TextBlock FontWeight="Bold" FontStyle="Italic" Text="Bold-Italic"/>
+        </ComboBox>
     </Grid>
 </Window>
