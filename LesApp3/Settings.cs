@@ -5,22 +5,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace LesApp3
 {
     /// <summary>
     /// Налаштування (параметри) для збереження
     /// </summary>
-    public struct Settings
+    public class Settings
     {
+        private SettingsColor foreground = new SettingsColor();
+        private SettingsColor background = new SettingsColor();
+        private SettingsFont fontStyle = new SettingsFont();
+
         /// <summary>
         /// Колір тексту
         /// </summary>
-        public SettingsColor Foreground { get; set; }
+        public SettingsColor Foreground
+        {
+            get { return foreground; }
+            set { foreground = value; }
+        }
         /// <summary>
         /// Колір фону
         /// </summary>
-        public SettingsColor Background { get; set; }
+        public SettingsColor Background
+        {
+            get { return background; }
+            set { background = value; }
+        }
         /// <summary>
         /// Розмір тексту
         /// </summary>
@@ -32,7 +45,33 @@ namespace LesApp3
         /// <summary>
         /// Стиль шрифта
         /// </summary>
-        public SettingsFont FontStyle { get; set; }
+        public SettingsFont FontStyle
+        {
+            get { return fontStyle; }
+            set { fontStyle = value; }
+        }
+
+        /// <summary>
+        /// Отримання всіх налаштувань в парі назва-значення
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> GetProperties()
+        {
+            List<string> name = new List<string>(),
+                value = new List<string>();
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+
+            foreach (string i in GetValueNames())
+                name.Add(i);
+
+            foreach (string i in GetValues())
+                value.Add(i);
+
+            for (int i = 0; i < name.Count; i++)
+                dict.Add(name[i], value[i]);
+
+            return dict;
+        }
 
         /// <summary>
         /// Отримання всіх налаштувань
@@ -76,7 +115,7 @@ namespace LesApp3
     /// <summary>
     /// Колір параметрів
     /// </summary>
-    public struct SettingsColor
+    public class SettingsColor
     {
         public enum Cannel
         {
@@ -98,22 +137,40 @@ namespace LesApp3
             B
         }
 
+        private int a, r, g, b;
+
         /// <summary>
         /// Alpha cannel
         /// </summary>
-        public int A { get; set; }
+        public int A
+        {
+            get { return a; }
+            set { a = value; }
+        }
         /// <summary>
         /// Red cannel
         /// </summary>
-        public int R { get; set; }
+        public int R
+        {
+            get { return r; }
+            set { r = value; }
+        }
         /// <summary>
         /// Green cannel
         /// </summary>
-        public int G { get; set; }
+        public int G
+        {
+            get { return g; }
+            set { g = value; }
+        }
         /// <summary>
         /// Blue cannel
         /// </summary>
-        public int B { get; set; }
+        public int B
+        {
+            get { return b; }
+            set { b = value; }
+        }
 
         /// <summary>
         /// Установка окремо по кольорам
@@ -162,6 +219,33 @@ namespace LesApp3
         }
 
         /// <summary>
+        /// Установка всіх кольорів
+        /// </summary>
+        /// <param name="a">альфа канал</param>
+        /// <param name="r">червоний канал</param>
+        /// <param name="g">зелений канал</param>
+        /// <param name="b">синій канал</param>
+        public void SetValues(int a, int r, int g, int b)
+        {
+            A = a;
+            R = r;
+            G = g;
+            B = b;
+        }
+
+        /// <summary>
+        /// Установка всіх кольорів
+        /// </summary>
+        /// <param name="color">колір</param>
+        public void SetValues(Color color)
+        {
+            this.a = color.A;
+            this.r = color.R;
+            this.g = color.G;
+            this.b = color.B;
+        }
+
+        /// <summary>
         /// Отримання набору кольорів: ARGB
         /// </summary>
         /// <returns></returns>
@@ -192,7 +276,7 @@ namespace LesApp3
     /// <summary>
     /// Стиль тексту
     /// </summary>
-    public struct SettingsFont
+    public class SettingsFont
     {
         /// <summary>
         /// Курсив
@@ -202,6 +286,49 @@ namespace LesApp3
         /// Потовщення
         /// </summary>
         public FontWeight FontWeight { get; set; }
+
+        /// <summary>
+        /// Установка всіх параметрів
+        /// </summary>
+        /// <param name="fs">курсив</param>
+        /// <param name="fw">товщина</param>
+        public void SetValues(FontStyle fs, FontWeight fw)
+        {
+            FontStyle = fs;
+            FontWeight = fw;
+        }
+
+        /// <summary>
+        /// Установка курсиву
+        /// </summary>
+        /// <param name="name">назва курсиву</param>
+        public void SetFontStyle(string name)
+        {
+            if (name.ToLower() == "Italic".ToLower())
+            {
+                FontStyle = FontStyles.Italic;
+            }
+            else
+            {
+                FontStyle = FontStyles.Normal;
+            }
+        }
+
+        /// <summary>
+        /// Установка потовщення
+        /// </summary>
+        /// <param name="name">назва потовщення</param>
+        public void SetFontWeight(string name)
+        {
+            if (name.ToLower() == "Bold".ToLower())
+            {
+                FontWeight = FontWeights.Bold;
+            }
+            else
+            {
+                FontWeight = FontWeights.Normal;
+            }
+        }
 
         /// <summary>
         /// Отримання параметрів стилю

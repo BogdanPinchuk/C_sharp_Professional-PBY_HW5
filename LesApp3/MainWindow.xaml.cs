@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,10 @@ namespace LesApp3
         /// Налаштування програми
         /// </summary>
         private Settings settings = new Settings();
+        /// <summary>
+        /// Директорія в реєстрі windows
+        /// </summary>
+        private string directory = @"Software\LesApp3";
 
         public MainWindow()
         {
@@ -88,7 +93,7 @@ namespace LesApp3
         }
 
         /// <summary>
-        /// Установка стилю шотфта
+        /// Установка стилю шрифта
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -132,8 +137,43 @@ namespace LesApp3
         /// </summary>
         private void SaveSettings()
         {
+            // колір тексту
+            settings.Foreground.SetValues(((SolidColorBrush)lbText.Foreground).Color);
+            // колір фону
+            settings.Background.SetValues(((SolidColorBrush)lbText.Background).Color);
+            // розмір тексту
+            settings.SizeFont = (int)lbText.FontSize;
+            // назва шрифта
+            settings.Font = lbText.FontFamily.Source;
+            // стиль шрифта
+            settings.FontStyle.SetValues(lbText.FontStyle, lbText.FontWeight);
 
+            try
+            {
+                // ініціалізація об'єкта RegistryKey для роботи реєстром
+                RegistryKey regKey = Registry.CurrentUser;
+
+                // запис даних
+                foreach (var i in settings.GetProperties())
+                {
+                    regKey.SetValue(i.Key, i.Value);
+                }
+
+                MessageBox.Show("Параметри збережено в реєстрі.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
+        /// <summary>
+        /// При натисканні збереження
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtSave_Click(object sender, RoutedEventArgs e)
+            => SaveSettings();
 
     }
 }
