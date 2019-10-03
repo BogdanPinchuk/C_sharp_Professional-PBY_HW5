@@ -129,7 +129,25 @@ namespace LesApp3
         /// </summary>
         private void LoadSettings()
         {
+            try
+            {
+                // ініціалізація об'єкта RegistryKey для роботи реєстром
+                RegistryKey regKey = Registry.CurrentUser;
+                // відкриття піддиректорії
+                regKey = regKey.OpenSubKey(directory);
 
+                // запис даних
+                foreach (var i in settings.GetProperties())
+                {
+                    regKey.SetValue(i.Key, i.Value);
+                }
+
+                MessageBox.Show("Параметри збережено в реєстрі.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>
@@ -187,6 +205,9 @@ namespace LesApp3
         /// <param name="e"></param>
         private void BtSave_Copy_Click(object sender, RoutedEventArgs e)
         {
+            // Наслідив - прибери за собою!!!
+
+            // запит на очищення реєстру
             MessageBoxResult res = MessageBox.Show("Видалити дані з реєстру?",
                 "Очищення реєстру", MessageBoxButton.OKCancel, MessageBoxImage.Question);
 
@@ -208,5 +229,6 @@ namespace LesApp3
                 }
             }
         }
+
     }
 }
