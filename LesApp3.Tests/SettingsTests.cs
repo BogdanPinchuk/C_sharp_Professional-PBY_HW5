@@ -112,5 +112,30 @@ namespace LesApp3.Tests
             }
         }
 
+        [TestMethod]
+        public void GetProperties_All()
+        {
+            // arrange
+            SettingsColor stub = new SettingsColor().SetValues(StubObj.ColorGold);
+            settings.Background = stub;
+            settings.Foreground = stub;
+            settings.SizeFont = StubObj.FontSize;
+            settings.Font = StubObj.Font;
+            settings.FontStyle = new SettingsFont().SetValues(StubObj.FontStyle_I, StubObj.FontWeight_B);
+
+            // assert
+            int j = 0;
+            foreach (var i in settings.GetProperties())
+            {
+                Assert.AreEqual(StubObj.ListProperties.Keys.ElementAt(j), i.Key);
+                Assert.AreEqual(StubObj.ListProperties.Values.ElementAt(j++), i.Value);
+            }
+
+            // present
+            foreach (var i in settings.GetProperties())
+            {
+                Debug.WriteLine($"{i.Key} : {i.Value}");
+            }
+        }
     }
 }

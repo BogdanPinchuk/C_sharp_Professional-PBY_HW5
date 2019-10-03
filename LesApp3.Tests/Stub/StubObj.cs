@@ -131,6 +131,24 @@ namespace LesApp3.Tests.Stub
                 ListValueNames_Style[0],
                 ListValueNames_Style[1],
             };
+
+        /// <summary>
+        /// Налаштування і назви
+        /// </summary>
+        public static Dictionary<string, string> ListProperties
+        {
+            get
+            {
+                Dictionary<string, string> dic =
+                    new Dictionary<string, string>();
+                for (int i = 0; i < ListValues.Count; i++)
+                {
+                    dic.Add(ListValueNames[i], ListValues[i]);
+                }
+
+                return dic;
+            }
+        }
         #endregion
 
     }
