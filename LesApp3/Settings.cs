@@ -12,28 +12,28 @@ namespace LesApp3
     /// <summary>
     /// Налаштування (параметри) для збереження
     /// </summary>
-    public class Settings
+    public struct Settings
     {
-        private SettingsColor foreground = new SettingsColor();
-        private SettingsColor background = new SettingsColor();
-        private SettingsFont fontStyle = new SettingsFont();
+        //private SettingsColor foreground;// = new SettingsColor();
+        //private SettingsColor background;// = new SettingsColor();
+        //private SettingsFont fontStyle;// = new SettingsFont();
 
         /// <summary>
         /// Колір тексту
         /// </summary>
-        public SettingsColor Foreground
-        {
-            get { return foreground; }
-            set { foreground = value; }
-        }
+        public SettingsColor Foreground { get; set; }
+        //{
+        //    get { return foreground; }
+        //    set { foreground = value; }
+        //}
         /// <summary>
         /// Колір фону
         /// </summary>
-        public SettingsColor Background
-        {
-            get { return background; }
-            set { background = value; }
-        }
+        public SettingsColor Background { get; set; }
+        //{
+        //    get { return background; }
+        //    set { background = value; }
+        //}
         /// <summary>
         /// Розмір тексту
         /// </summary>
@@ -45,11 +45,7 @@ namespace LesApp3
         /// <summary>
         /// Стиль шрифта
         /// </summary>
-        public SettingsFont FontStyle
-        {
-            get { return fontStyle; }
-            set { fontStyle = value; }
-        }
+        public SettingsFont FontStyle { get; set; }
 
         /// <summary>
         /// Отримання всіх налаштувань в парі назва-значення
@@ -80,16 +76,18 @@ namespace LesApp3
         public IEnumerable GetValues()
         {
             // колір тексту
-            yield return Foreground.GetValues();
+            foreach (var i in Foreground.GetValues())
+                yield return i;
             // колір фону
-            yield return Background.GetValues();
+            foreach (var i in Background.GetValues())
+                yield return i;
             // розмір тексту
             yield return SizeFont.ToString();
             // назва шрифта
             yield return Font;
             // стиль шрифта
-            yield return FontStyle.GetValues();
-            yield break;
+            foreach (var i in FontStyle.GetValues())
+                yield return i;
         }
 
         /// <summary>
@@ -99,23 +97,25 @@ namespace LesApp3
         public IEnumerable GetValueNames()
         {
             // колір тексту
-            yield return Foreground.GetValueNames("Foreground");
+            foreach (var i in Foreground.GetValueNames("Foreground"))
+                yield return i;
             // колір фону
-            yield return Background.GetValueNames("Background");
+            foreach (var i in Background.GetValueNames("Background"))
+                yield return i;
             // розмір тексту
-            yield return SizeFont.ToString();
+            yield return "SizeFont";
             // назва шрифта
-            yield return Font;
+            yield return "Font";
             // стиль шрифта
-            yield return FontStyle.GetValueNames("FontStyle");
-            yield break;
+            foreach (var i in FontStyle.GetValueNames("FontStyle"))
+                yield return i;
         }
     }
 
     /// <summary>
     /// Колір параметрів
     /// </summary>
-    public class SettingsColor
+    public struct SettingsColor
     {
         public enum Cannel
         {
@@ -137,54 +137,36 @@ namespace LesApp3
             B
         }
 
-        private int a, r, g, b;
-
         /// <summary>
         /// Alpha cannel
         /// </summary>
-        public int A
-        {
-            get { return a; }
-            set { a = value; }
-        }
+        public int A { get; set; }
         /// <summary>
         /// Red cannel
         /// </summary>
-        public int R
-        {
-            get { return r; }
-            set { r = value; }
-        }
+        public int R { get; set; }
         /// <summary>
         /// Green cannel
         /// </summary>
-        public int G
-        {
-            get { return g; }
-            set { g = value; }
-        }
+        public int G { get; set; }
         /// <summary>
         /// Blue cannel
         /// </summary>
-        public int B
-        {
-            get { return b; }
-            set { b = value; }
-        }
+        public int B { get; set; }
 
         /// <summary>
         /// Установка окремо по кольорам
         /// </summary>
         /// <param name="value">числове значення кольору</param>
         /// <param name="color">канал якому присвоїти колір</param>
-        public void SetValue(string value, Cannel color)
+        public SettingsColor SetValues(string value, Cannel color)
         {
             // для збереження значення кольру
             int num = default(int);
 
             // конвертація даних в число
             if (!int.TryParse(value, out num))
-                return;
+                throw new Exception("Невірні вхідні дані.");
 
             switch (color)
             {
@@ -201,6 +183,8 @@ namespace LesApp3
                     B = num;
                     break;
             }
+
+            return this;
         }
 
         /// <summary>
@@ -210,12 +194,14 @@ namespace LesApp3
         /// <param name="r">червоний канал</param>
         /// <param name="g">зелений канал</param>
         /// <param name="b">синій канал</param>
-        public void SetValues(string a, string r, string g, string b)
+        public SettingsColor SetValues(string a, string r, string g, string b)
         {
-            SetValue(a, Cannel.A);
-            SetValue(r, Cannel.R);
-            SetValue(g, Cannel.G);
-            SetValue(b, Cannel.B);
+            SetValues(a, Cannel.A);
+            SetValues(r, Cannel.R);
+            SetValues(g, Cannel.G);
+            SetValues(b, Cannel.B);
+
+            return this;
         }
 
         /// <summary>
@@ -225,24 +211,28 @@ namespace LesApp3
         /// <param name="r">червоний канал</param>
         /// <param name="g">зелений канал</param>
         /// <param name="b">синій канал</param>
-        public void SetValues(int a, int r, int g, int b)
+        public SettingsColor SetValues(int a, int r, int g, int b)
         {
             A = a;
             R = r;
             G = g;
             B = b;
+
+            return this;
         }
 
         /// <summary>
         /// Установка всіх кольорів
         /// </summary>
         /// <param name="color">колір</param>
-        public void SetValues(Color color)
+        public SettingsColor SetValues(Color color)
         {
-            this.a = color.A;
-            this.r = color.R;
-            this.g = color.G;
-            this.b = color.B;
+            A = color.A;
+            R = color.R;
+            G = color.G;
+            B = color.B;
+
+            return this;
         }
 
         /// <summary>
@@ -255,7 +245,6 @@ namespace LesApp3
             yield return R.ToString();
             yield return G.ToString();
             yield return B.ToString();
-            yield break;
         }
 
         /// <summary>
@@ -268,7 +257,6 @@ namespace LesApp3
             yield return property + ".R";
             yield return property + ".G";
             yield return property + ".B";
-            yield break;
         }
 
     }
@@ -276,7 +264,7 @@ namespace LesApp3
     /// <summary>
     /// Стиль тексту
     /// </summary>
-    public class SettingsFont
+    public struct SettingsFont
     {
         /// <summary>
         /// Курсив
@@ -292,17 +280,19 @@ namespace LesApp3
         /// </summary>
         /// <param name="fs">курсив</param>
         /// <param name="fw">товщина</param>
-        public void SetValues(FontStyle fs, FontWeight fw)
+        public SettingsFont SetValues(FontStyle fs, FontWeight fw)
         {
             FontStyle = fs;
             FontWeight = fw;
+
+            return this;
         }
 
         /// <summary>
         /// Установка курсиву
         /// </summary>
         /// <param name="name">назва курсиву</param>
-        public void SetFontStyle(string name)
+        public SettingsFont SetFontStyle(string name)
         {
             if (name.ToLower() == "Italic".ToLower())
             {
@@ -312,13 +302,15 @@ namespace LesApp3
             {
                 FontStyle = FontStyles.Normal;
             }
+
+            return this;
         }
 
         /// <summary>
         /// Установка потовщення
         /// </summary>
         /// <param name="name">назва потовщення</param>
-        public void SetFontWeight(string name)
+        public SettingsFont SetFontWeight(string name)
         {
             if (name.ToLower() == "Bold".ToLower())
             {
@@ -328,30 +320,31 @@ namespace LesApp3
             {
                 FontWeight = FontWeights.Normal;
             }
+
+            return this;
         }
 
         /// <summary>
         /// Отримання параметрів стилю
         /// </summary>
         /// <returns></returns>
-        public IEnumerable GetValues()
+        public IEnumerable<string> GetValues()
         {
             yield return FontStyle.ToString();
             yield return FontWeight.ToString();
-            yield break;
         }
 
         /// <summary>
         /// Отримання назв параметрів стилю
         /// </summary>
         /// <returns></returns>
-        public IEnumerable GetValueNames(string property)
+        public IEnumerable<string> GetValueNames(string property)
         {
-            yield return property + "FontStyle";
-            yield return property + "FontWeight";
-            yield break;
+            yield return property + ".FontStyle";
+            yield return property + ".FontWeight";
         }
     }
 
     //todo: Реалізувати через числові дані
+    //todo: Зробити структурами
 }
