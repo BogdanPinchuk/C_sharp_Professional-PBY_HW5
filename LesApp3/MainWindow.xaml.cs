@@ -138,21 +138,26 @@ namespace LesApp3
         private void SaveSettings()
         {
             // колір тексту
-            settings.Foreground.SetValues(((SolidColorBrush)lbText.Foreground).Color);
+            settings.Foreground = new SettingsColor()
+                .SetValues(((SolidColorBrush)lbText.Foreground).Color);
             // колір фону
-            settings.Background.SetValues(((SolidColorBrush)lbText.Background).Color);
+            settings.Background = new SettingsColor()
+                .SetValues(((SolidColorBrush)lbText.Background).Color);
             // розмір тексту
             settings.SizeFont = (int)lbText.FontSize;
             // назва шрифта
             settings.Font = lbText.FontFamily.Source;
             // стиль шрифта
-            settings.FontStyle.SetValues(lbText.FontStyle, lbText.FontWeight);
+            settings.FontStyle = new SettingsFont()
+                .SetValues(lbText.FontStyle, lbText.FontWeight);
 
             try
             {
                 // ініціалізація об'єкта RegistryKey для роботи реєстром
                 RegistryKey regKey = Registry.CurrentUser;
-
+                // запис в піддиректорію
+                regKey = regKey.CreateSubKey(directory);
+                
                 // запис даних
                 foreach (var i in settings.GetProperties())
                 {
@@ -175,5 +180,33 @@ namespace LesApp3
         private void BtSave_Click(object sender, RoutedEventArgs e)
             => SaveSettings();
 
+        /// <summary>
+        /// Очищення реєстру при двойному кліку мишкою
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtSave_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult res = MessageBox.Show("Видалити дані з реєстру?",
+                "Очищення реєстру", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+
+            if (res == MessageBoxResult.OK)
+            {
+                try
+                {
+                    // ініціалізація об'єкта RegistryKey для роботи реєстром
+                    RegistryKey regKey = Registry.CurrentUser;
+                    
+                    // запис в піддиректорію
+                    regKey.DeleteSubKeyTree(directory);
+
+                    MessageBox.Show("Сліди програми очищено з реєстру!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
     }
 }
