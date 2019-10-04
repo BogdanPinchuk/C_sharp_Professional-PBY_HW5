@@ -31,10 +31,6 @@ namespace LesApp4
         /// Налаштування програми
         /// </summary>
         private Settings settings = new Settings();
-        /// <summary>
-        /// Директорія в реєстрі windows
-        /// </summary>
-        private string directory = @"Software\LesApp3";
 
         public MainWindow()
         {
