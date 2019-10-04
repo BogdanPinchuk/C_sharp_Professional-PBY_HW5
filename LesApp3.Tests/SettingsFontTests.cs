@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LesApp3.Tests.Stub;
+using LesApp3.Lib.Tests.Stub;
 using System.Diagnostics;
 
-namespace LesApp3.Tests
+namespace LesApp3.Lib.Tests
 {
     [TestClass]
     public class SettingsFontTests

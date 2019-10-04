@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace LesApp3.Tests.Stub
+namespace LesApp3.Lib.Tests.Stub
 {
     /// <summary>
     /// Заглушки

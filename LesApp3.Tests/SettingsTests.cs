@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LesApp3.Tests.Stub;
+using LesApp3.Lib.Tests.Stub;
 using System.Windows.Media;
 using System.Diagnostics;
 
-namespace LesApp3.Tests
+namespace LesApp3.Lib.Tests
 {
     [TestClass]
     public class SettingsTests

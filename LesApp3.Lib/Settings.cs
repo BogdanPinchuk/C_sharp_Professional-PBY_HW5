@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace LesApp3
+namespace LesApp3.Lib
 {
     /// <summary>
     /// Налаштування (параметри) для збереження
@@ -345,6 +345,4 @@ namespace LesApp3
         }
     }
 
-    //todo: Реалізувати через числові дані
-    //todo: Зробити структурами
 }

@@ -58,9 +58,9 @@
     <Compile Include="Stub\StubObj.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LesApp3\LesApp3.csproj">
-      <Project>{2cdc8335-2173-4df2-bb34-337b31db3c13}</Project>
-      <Name>LesApp3</Name>
+    <ProjectReference Include="..\LesApp3.Lib\LesApp3.Lib.csproj">
+      <Project>{fa7a6592-17bc-4265-9bca-d2c8fc565052}</Project>
+      <Name>LesApp3.Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
