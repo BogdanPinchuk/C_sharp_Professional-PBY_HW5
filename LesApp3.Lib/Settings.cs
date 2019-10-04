@@ -22,18 +22,10 @@ namespace LesApp3.Lib
         /// Колір тексту
         /// </summary>
         public SettingsColor Foreground { get; set; }
-        //{
-        //    get { return foreground; }
-        //    set { foreground = value; }
-        //}
         /// <summary>
         /// Колір фону
         /// </summary>
         public SettingsColor Background { get; set; }
-        //{
-        //    get { return background; }
-        //    set { background = value; }
-        //}
         /// <summary>
         /// Розмір тексту
         /// </summary>
@@ -59,7 +51,6 @@ namespace LesApp3.Lib
 
             foreach (string i in GetValueNames())
                 name.Add(i);
-
             foreach (string i in GetValues())
                 value.Add(i);
 
@@ -109,6 +100,49 @@ namespace LesApp3.Lib
             // стиль шрифта
             foreach (var i in FontStyle.GetValueNames("FontStyle"))
                 yield return i;
+        }
+
+        /// <summary>
+        /// Розпізнавання зчитаних даних і занесення в параметри
+        /// </summary>
+        /// <param name="data">вхідні дані</param>
+        public void Recognition(Dictionary<string, string> data)
+        {
+            List<string> property = new List<string>();
+            // колір тексту
+            foreach (string i in Foreground.GetValueNames("Foreground"))
+            {
+                property.Add(data[i]);
+            }
+            Foreground = new SettingsColor().SetValues(property[0], property[1], property[2], property[3]);
+            property.Clear();
+
+            // колір фону
+            foreach (string i in Foreground.GetValueNames("Background"))
+            {
+                property.Add(data[i]);
+            }
+            Background = new SettingsColor().SetValues(property[0], property[1], property[2], property[3]);
+            property.Clear();
+
+            // розмір шрифта
+            {
+                int temp = 0;
+                if (int.TryParse(data["SizeFont"], out temp))
+                {
+                    SizeFont = temp;
+                }
+            }
+
+            // шрифт
+            Font = data["Font"];
+
+            // стиль шрифта
+            foreach (string i in FontStyle.GetValueNames("FontStyle"))
+            {
+                property.Add(data[i]);
+            }
+            FontStyle = new SettingsFont().SetValues(property[0], property[1]);
         }
     }
 
@@ -259,6 +293,19 @@ namespace LesApp3.Lib
             yield return property + ".B";
         }
 
+        /// <summary>
+        /// Отримання кольору
+        /// </summary>
+        /// <returns></returns>
+        public Color GetColor()
+            => new Color()
+            {
+                A = (byte)this.A,
+                R = (byte)this.R,
+                G = (byte)this.G,
+                B = (byte)this.B,
+            };
+
     }
 
     /// <summary>
@@ -276,7 +323,7 @@ namespace LesApp3.Lib
         public FontWeight FontWeight { get; set; }
 
         /// <summary>
-        /// Установка всіх параметрів
+        /// Установка всіх параметрів стилю шрифта
         /// </summary>
         /// <param name="fs">курсив</param>
         /// <param name="fw">товщина</param>
@@ -289,10 +336,23 @@ namespace LesApp3.Lib
         }
 
         /// <summary>
+        /// Установка всіх параметрів стилю шрифта
+        /// </summary>
+        /// <param name="fs">FontStyle</param>
+        /// <param name="fw">FontWeight</param>
+        public SettingsFont SetValues(string fs, string fw)
+        {
+            FontStyle = SetFontStyle(fs);
+            FontWeight = SetFontWeight(fw);
+
+            return this;
+        }
+
+        /// <summary>
         /// Установка курсиву
         /// </summary>
         /// <param name="name">назва курсиву</param>
-        public SettingsFont SetFontStyle(string name)
+        public FontStyle SetFontStyle(string name)
         {
             if (name.ToLower() == "Italic".ToLower())
             {
@@ -303,14 +363,14 @@ namespace LesApp3.Lib
                 FontStyle = FontStyles.Normal;
             }
 
-            return this;
+            return FontStyle;
         }
 
         /// <summary>
         /// Установка потовщення
         /// </summary>
         /// <param name="name">назва потовщення</param>
-        public SettingsFont SetFontWeight(string name)
+        public FontWeight SetFontWeight(string name)
         {
             if (name.ToLower() == "Bold".ToLower())
             {
@@ -321,7 +381,7 @@ namespace LesApp3.Lib
                 FontWeight = FontWeights.Normal;
             }
 
-            return this;
+            return FontWeight;
         }
 
         /// <summary>

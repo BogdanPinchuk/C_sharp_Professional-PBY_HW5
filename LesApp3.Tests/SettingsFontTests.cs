@@ -60,6 +60,17 @@ namespace LesApp3.Lib.Tests
         }
 
         [TestMethod]
+        public void SetValues_StringBoldItalic_Equal()
+        {
+            // act
+            sf.SetValues(StubObj.FontStyle_I.ToString(), StubObj.FontWeight_B.ToString());
+
+            // assert
+            Assert.AreEqual(StubObj.FontStyle_I, sf.FontStyle);
+            Assert.AreEqual(StubObj.FontWeight_B, sf.FontWeight);
+        }
+
+        [TestMethod]
         public void SetFontStyle_Italic_Equal()
         {
             // arrange

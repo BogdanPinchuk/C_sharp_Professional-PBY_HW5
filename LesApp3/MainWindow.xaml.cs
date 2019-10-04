@@ -35,9 +35,8 @@ namespace LesApp3
         {
             InitializeComponent();
 
-            // при завантаженні форми
-
-
+            // завантаження параметрів
+            LoadSettings();
         }
 
         /// <summary>
@@ -79,7 +78,7 @@ namespace LesApp3
         }
 
         /// <summary>
-        /// При виборі стилю шрифта
+        /// При виборі шрифта
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -137,13 +136,52 @@ namespace LesApp3
                 // відкриття піддиректорії
                 regKey = regKey.OpenSubKey(directory);
 
-                // запис даних
-                foreach (var i in settings.GetProperties())
+                if (regKey != null)
                 {
-                    regKey.SetValue(i.Key, i.Value);
-                }
+                    // набір збережеих налаштувань
+                    Dictionary<string, string> loadData = new Dictionary<string, string>();
 
-                MessageBox.Show("Параметри збережено в реєстрі.");
+                    // запис даних
+                    foreach (string i in settings.GetValueNames())
+                    {
+                        loadData.Add(i, (string)regKey.GetValue(i, string.Empty));
+                    }
+
+                    // розпізнавання параметрів
+                    settings.Recognition(loadData);
+
+                    #region Установка параметрів
+                    // колір тексту (міняючи дані на елементах, автоматично міняються дані і на лейблі)
+                    cpText.SelectedColor = settings.Foreground.GetColor();
+                    // колір тексту
+                    cpGround.SelectedColor = settings.Background.GetColor();
+                    // розмір шрифту
+                    sSize.Value = settings.SizeFont;
+                    // шрифт
+                    cbFont.SelectedIndex = Fonts.SystemFontFamilies.ToList()
+                        .IndexOf(new FontFamily(settings.Font));
+                    // стиль шрифта
+                    if (settings.FontStyle.FontStyle == FontStyles.Italic &&
+                        settings.FontStyle.FontWeight != FontWeights.Bold)
+                    {
+                        cbStyle.SelectedIndex = 1;
+                    }
+                    else if (settings.FontStyle.FontStyle != FontStyles.Italic &&
+                        settings.FontStyle.FontWeight == FontWeights.Bold)
+                    {
+                        cbStyle.SelectedIndex = 2;
+                    }
+                    else if (settings.FontStyle.FontStyle == FontStyles.Italic &&
+                        settings.FontStyle.FontWeight == FontWeights.Bold)
+                    {
+                        cbStyle.SelectedIndex = 3;
+                    }
+                    else
+                    {
+                        cbStyle.SelectedIndex = 0;
+                    }
+                    #endregion
+                }
             }
             catch (Exception ex)
             {
@@ -176,7 +214,7 @@ namespace LesApp3
                 RegistryKey regKey = Registry.CurrentUser;
                 // запис в піддиректорію
                 regKey = regKey.CreateSubKey(directory);
-                
+
                 // запис даних
                 foreach (var i in settings.GetProperties())
                 {
@@ -218,7 +256,7 @@ namespace LesApp3
                 {
                     // ініціалізація об'єкта RegistryKey для роботи реєстром
                     RegistryKey regKey = Registry.CurrentUser;
-                    
+
                     // запис в піддиректорію
                     regKey.DeleteSubKeyTree(directory);
 

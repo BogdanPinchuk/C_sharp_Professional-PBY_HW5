@@ -121,7 +121,8 @@ namespace LesApp3.Lib.Tests
             settings.Foreground = stub;
             settings.SizeFont = StubObj.FontSize;
             settings.Font = StubObj.Font;
-            settings.FontStyle = new SettingsFont().SetValues(StubObj.FontStyle_I, StubObj.FontWeight_B);
+            var stubStyle = new SettingsFont().SetValues(StubObj.FontStyle_I, StubObj.FontWeight_B);
+            settings.FontStyle = stubStyle;
 
             // assert
             int j = 0;
@@ -133,6 +134,37 @@ namespace LesApp3.Lib.Tests
 
             // present
             foreach (var i in settings.GetProperties())
+            {
+                Debug.WriteLine($"{i.Key} : {i.Value}");
+            }
+        }
+
+        [TestMethod]
+        public void Recognition_SavePropperty()
+        {
+            // arrange
+            SettingsColor stub = new SettingsColor().SetValues(StubObj.ColorGold);
+            settings.Background = stub;
+            settings.Foreground = stub;
+            settings.SizeFont = StubObj.FontSize;
+            settings.Font = StubObj.Font;
+            var stubStyle = new SettingsFont().SetValues(StubObj.FontStyle_I, StubObj.FontWeight_B);
+            settings.FontStyle = stubStyle;
+
+            // act
+            Dictionary<string, string> data = settings.GetProperties();
+            Settings actual = new Settings();
+            actual.Recognition(data);
+
+            // assert
+            Assert.AreEqual(stub, actual.Background);
+            Assert.AreEqual(stub, actual.Foreground);
+            Assert.AreEqual(StubObj.FontSize, actual.SizeFont);
+            Assert.AreEqual(StubObj.Font, actual.Font);
+            Assert.AreEqual(stubStyle, actual.FontStyle);
+
+            // present
+            foreach (var i in data)
             {
                 Debug.WriteLine($"{i.Key} : {i.Value}");
             }
