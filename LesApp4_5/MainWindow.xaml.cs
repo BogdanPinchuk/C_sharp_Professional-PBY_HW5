@@ -1,11 +1,7 @@
-﻿using LesApp3.Lib;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,7 +13,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LesApp3.Lib;
+using System.IO;
 using System.Xml;
+using System.Reflection;
+using System.Collections.Specialized;
+using System.Configuration;
 
 namespace LesApp4
 {
@@ -131,7 +132,7 @@ namespace LesApp4
         {
             try
             {
-                // завантаження налаштувань (треба додати ссилку/бібліотеку System.Configuration)
+                // завантаження налаштувань
                 NameValueCollection appset = ConfigurationManager.AppSettings;
 
                 if (appset.Count > 0)
@@ -289,5 +290,6 @@ namespace LesApp4
                 MessageBox.Show(ex.Message);
             }
         }
+
     }
 }
